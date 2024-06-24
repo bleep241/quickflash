@@ -48,21 +48,38 @@ const prompt = ChatPromptTemplate.fromMessages([
 
 const chain = prompt.pipe(chatModel).pipe(outputParser);
 
-export async function invokeBot() {
+export async function invokeBot(url: string) {
+  console.log('url:', url);
   try {
-    const res = await chain.invoke({
-      input: wallOfText,
+
+    const scrapedData = await fetch(`https://r.jina.ai/${url}`, {
+      method: "get",
+      headers: {
+        "Authorization": `Bearer ${process.env.JINA_API_KEY}`,
+        "X-With-Links-Summary": "true"
+      },
     });
 
-    let cleanedResponse: string = res;
-    console.log('BEFORE BEING CLEANED:', cleanedResponse);
+    const textFromData = await scrapedData.text();
+
+    console.log('scraped:', textFromData);
+    const res = await chain.invoke({
+      input: textFromData,
+    });
+
+    let cleanedResponse: any = res;
+    // console.log('BEFORE BEING CLEANED:', cleanedResponse);
 
     if (res.split('')[0] === '`') {
       cleanedResponse = res.split('').slice(7, -3).join('');
       console.log('CLEANING IT UP:', cleanedResponse);
     }
 
-    return cleanedResponse;
+    console.log('parsed response:', JSON.parse(cleanedResponse));
+
+    return JSON.parse(cleanedResponse);
+    // return scrapedText
+    // return textFromData;
   } catch (error) {
     console.log("error generating flash cards:", error);
   }
