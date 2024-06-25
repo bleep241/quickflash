@@ -36,7 +36,7 @@ export default function Home() {
       <MaxWidthWrapper>
         <div className="flex justify-center flex-col items-center gap-5 mt-20">
           <div className="flex">
-            <h1 className="font-bold text-3xl">QUICKFLASH</h1><Zap className="size-10 text-yellow-300 -mt-1" />
+            <h1 className="font-bold text-3xl">QUICKFLA<Zap className="size-8 text-yellow-300 -mt-1 inline-block" />H</h1>
           </div>
           <div className="flex w-full gap-2 justify-center">
             <Input type="text" onChange={handleInput} placeholder="Enter url here..." className="w-[50%]" />
