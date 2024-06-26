@@ -30,7 +30,7 @@ const CreateCategory = (props: Props) => {
         <form id='create-category' className=''>
           <div className='grid gap-2'>
             <Label>Name</Label>
-            <Input id='name' name='name' placeholder='e.g. JavaScript' />
+            <Input id='name' name='name' placeholder='e.g. JavaScript' required/>
           </div>
         </form>
         <DialogFooter>

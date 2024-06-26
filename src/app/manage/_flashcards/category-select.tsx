@@ -20,11 +20,12 @@ import {
 } from "@/components/ui/popover"
 
 
-export function Combobox({ data, placeholder }: { data: { label: string; value: any; }[], placeholder: string }) {
+export function CategorySelect({ categories, onSelect }: { 
+  categories: { label: string; value: any; }[], 
+  onSelect: (value: any) => void 
+}) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
-
-  console.log('data in combobox:', data);
+  const [value, setValue] = React.useState<string>(categories[0].value)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -36,7 +37,7 @@ export function Combobox({ data, placeholder }: { data: { label: string; value: 
           className="w-[200px] justify-between"
         >
           {value
-            ? data.find((datum) => datum.value === value)?.label
+            ? categories.find((category) => category.value === value)?.label
             : "Select category..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -47,22 +48,23 @@ export function Combobox({ data, placeholder }: { data: { label: string; value: 
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {data.map((datum) => (
+              {categories.map((category) => (
                 <CommandItem
-                  key={datum.value}
-                  value={datum.value}
+                  key={category.value}
+                  value={category.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
+                    onSelect(currentValue)
                     setOpen(false)
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === datum.value ? "opacity-100" : "opacity-0"
+                      value === category.value ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {datum.label}
+                  {category.label}
                 </CommandItem>
               ))}
             </CommandGroup>
