@@ -20,12 +20,13 @@ import {
 } from "@/components/ui/popover"
 
 
-export function CategorySelect({ categories, onSelect }: { 
-  categories: { label: string; value: any; }[], 
-  onSelect: (value: any) => void 
+export function CategorySelect({ categories, onSelect, defaultValue }: { 
+  categories: { label: string; value: any; }[];
+  onSelect: (value: any) => void;
+  defaultValue: { label: string, value: any };
 }) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState<string>(categories[0].value)
+  const [value, setValue] = React.useState<string>(defaultValue.value)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

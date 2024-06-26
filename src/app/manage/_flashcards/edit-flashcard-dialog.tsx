@@ -1,46 +1,52 @@
 "use client"
 
-import React, { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog"
-import { Plus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { Category } from '@prisma/client'
+import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { Category } from '@prisma/client'
+import React, { useState } from 'react'
 import { CategorySelect } from './category-select'
+import { FlashcardColumn } from './flashcards-columns'
 
 
-const CreateFlashcard = ({ categories }: { categories: Category[] }) => {
-  const [selectedCategory, setSelectedCategory] = useState<Category>(categories[0]);
+const EditFlashcard = ({ flashcard, categories, children }: { 
+  flashcard: FlashcardColumn
+  categories: Category[] 
+  children: React.ReactNode
+}) => {
+  const [selectedCategory, setSelectedCategory] = useState<Category>(flashcard.category);
   const comboboxData = categories.map((category) => ({ label: category.name, value: category.slug }))
+
+  console.log('flashcard:', flashcard);
+
+  console.log("CATEROGIES:", categories);
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='secondary' size='icon'>
-          <Plus />
-        </Button>
+        {children}
       </DialogTrigger>
       <DialogContent className='gap-6'>
         <DialogHeader>
-          <DialogTitle>Create a new flashcard</DialogTitle>
+          <DialogTitle>Edit {flashcard.question}</DialogTitle>
         </DialogHeader>
-        <form id='create-flashcard' className='grid gap-4'>
+        <form id='update-flashcard' className='grid gap-4'>
           <div className='grid gap-2'>
             <Label htmlFor='question'>Question</Label>
-            <Input id='question' name='question' placeholder='e.g. What is JavaScript?' required/>
+            <Input id='question' name='question' placeholder={flashcard.question} defaultValue={flashcard.question} required/>
           </div>
           <div className='grid gap-2'>
             <Label htmlFor='answer'>Answer</Label>
-            <Textarea id='answer' name='answer' placeholder='e.g. JavaScript is a programming language.' required/>
+            <Textarea id='answer' name='answer' placeholder={flashcard.answer} defaultValue={flashcard.answer} required/>
           </div>
           <div className='grid gap-2'>
             <Label htmlFor='answer'>Add to category</Label>
@@ -64,8 +70,8 @@ const CreateFlashcard = ({ categories }: { categories: Category[] }) => {
           </div>
         </form>
         <DialogFooter>
-          <Button form='create-flashcard' type='submit'>
-            Create
+          <Button form='update-flashcard' type='submit'>
+            Update
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -73,4 +79,4 @@ const CreateFlashcard = ({ categories }: { categories: Category[] }) => {
   )
 }
 
-export default CreateFlashcard
+export default EditFlashcard

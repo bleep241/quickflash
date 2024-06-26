@@ -16,7 +16,10 @@ import { Category } from '@prisma/client'
 
 type Props = {}
 
-const EditCategory = ({category, children}: {category: Category, children: React.ReactNode}) => {
+const EditCategory = ({ category, children }: {
+  category: Category,
+  children: React.ReactNode
+}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -29,7 +32,7 @@ const EditCategory = ({category, children}: {category: Category, children: React
         <form id='create-category' className=''>
           <div className='grid gap-2'>
             <Label>Name</Label>
-            <Input id='name' name='name' placeholder={category.name} defaultValue={category.name}/>
+            <Input id='name' name='name' placeholder={category.name} defaultValue={category.name} />
           </div>
         </form>
         <DialogFooter>

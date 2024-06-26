@@ -36,7 +36,7 @@ export default function RootLayout({
             href="/"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-            <Zap className="h-6 w-6" />
+            <Zap className="h-6 w-6 text-yellow-400" />
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Link
@@ -69,7 +69,7 @@ export default function RootLayout({
                 href="/"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <Zap className="h-6 w-6" />
+                <Zap className="h-6 w-6 text-yellow-400" />
                 <span className="sr-only">Quickflash</span>
               </Link>
               <Link href="/manage" className="hover:text-foreground">

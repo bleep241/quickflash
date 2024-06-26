@@ -5,6 +5,8 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { Button } from "@/components/ui/button";
 import { Flashcard, Category } from '@prisma/client';
 import { MoreHorizontal } from "lucide-react";
+import EditFlashcard from "./edit-flashcard-dialog";
+import ConfirmDelete from "./confirm-flashcard-delete";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -13,7 +15,7 @@ export type FlashcardColumn = Omit<Flashcard, 'categoryId'> & {
   category: Category;
 };
 
-export const flashcardsColumns: ColumnDef<FlashcardColumn>[] = [
+export const generateFlashcardsColumns: (categories: Category[]) => ColumnDef<FlashcardColumn>[] = (categories) => ([
   {
     accessorKey: 'id',
     header: 'ID'
@@ -25,7 +27,7 @@ export const flashcardsColumns: ColumnDef<FlashcardColumn>[] = [
   {
     accessorKey: 'answer',
     header: 'Answer',
-    cell: ({getValue}) => (
+    cell: ({ getValue }) => (
       <p>
         {getValue() as string}
       </p>
@@ -38,7 +40,7 @@ export const flashcardsColumns: ColumnDef<FlashcardColumn>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const category = row.original;
+      const flashcard = row.original;
 
       return (
         <DropdownMenu>
@@ -49,11 +51,23 @@ export const flashcardsColumns: ColumnDef<FlashcardColumn>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <EditFlashcard categories={categories} flashcard={flashcard}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onSelect={(e) => e.preventDefault()}>
+                Edit
+              </DropdownMenuItem>
+            </EditFlashcard>
+            <ConfirmDelete flashcard={flashcard}>
+              <DropdownMenuItem
+                className="cursor-pointer text-destructive focus:text-destructive/80"
+                onSelect={(e) => e.preventDefault()}>
+                Delete
+              </DropdownMenuItem>
+            </ConfirmDelete>
           </DropdownMenuContent>
         </DropdownMenu>
       )
     },
   },
-]
+]);

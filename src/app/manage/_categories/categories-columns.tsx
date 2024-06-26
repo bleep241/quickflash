@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { Button } from "@/components/ui/button"
 import {Category} from '@prisma/client'
 import { MoreHorizontal } from "lucide-react"
-import EditCategory from "./edit-category-dialog copy"
+import EditCategory from "./edit-category-dialog"
 import ConfirmDelete from "./confirm-category-delete"
 
 // This type is used to define the shape of our data.
@@ -47,7 +47,7 @@ export const categoriesColumns: ColumnDef<Category>[] = [
             </EditCategory>
             <ConfirmDelete category={category}>
             <DropdownMenuItem
-            className="cursor-pointer text-destructive"
+            className="cursor-pointer text-destructive focus:text-destructive/80"
             onSelect={(e) => e.preventDefault()}
             >
               Delete
@@ -58,4 +58,4 @@ export const categoriesColumns: ColumnDef<Category>[] = [
       )
     },
   },
-]
+];
