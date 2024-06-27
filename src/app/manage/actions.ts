@@ -9,18 +9,27 @@ export async function createCategory({
   slug,
 }:
   Prisma.CategoryCreateInput) {
-  try {
-    await prisma.category.create({
-      data: {
-        name,
-        slug,
-      }
-    });
-  } catch (error) {
-    console.error('There was an error creating the category:', error);
+  const existingCategory = await prisma.category.findUnique({
+    where: {
+      slug,
+    }
+  });
+
+  if (existingCategory) {
+    return {
+      error: `The category "${name}" already exists!`
+    }
   }
 
+  const createdCategory = await prisma.category.create({
+    data: {
+      name,
+      slug,
+    }
+  });
+
   revalidatePath('/manage');
+  return { createdCategory }
 };
 
 export async function editCategory({ id, data }: {
@@ -119,7 +128,7 @@ export async function updateFlashcard({
   answer,
   slug,
   category,
-} : {
+}: {
   flashcardId: number
   question: string
   answer: string

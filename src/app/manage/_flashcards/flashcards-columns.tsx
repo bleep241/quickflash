@@ -11,9 +11,13 @@ import ConfirmDelete from "./confirm-flashcard-delete";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export type FlashcardColumn = Omit<Flashcard, 'categoryId'> & {
+export type FlashcardColumn = {
+  id: number;
+  question: string;
+  answer: string;
+  slug: string;
   category: Category;
-};
+}
 
 export const generateFlashcardsColumns: (categories: Category[]) => ColumnDef<FlashcardColumn>[] = (categories) => ([
   {
@@ -28,14 +32,22 @@ export const generateFlashcardsColumns: (categories: Category[]) => ColumnDef<Fl
     accessorKey: 'answer',
     header: 'Answer',
     cell: ({ getValue }) => (
-      <p>
+      <span>
         {getValue() as string}
-      </p>
+      </span>
     )
   },
   {
-    accessorKey: 'slug',
-    header: 'Slug'
+    accessorKey: 'category',
+    header: 'Category',
+    cell: ({ getValue }) => {
+      const category = getValue();
+      //@ts-ignore
+      const name: string = category.name;
+      return (
+        <span>{name}</span>
+      )
+    }
   },
   {
     id: "actions",

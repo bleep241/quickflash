@@ -22,14 +22,21 @@ const CreateCategory = () => {
   const { toast } = useToast();
 
   const handleCreateCategory = async (formData: FormData) => {
-    console.log('formdata is:', formData.get("name"));
     const newCategoryName = formData.get("name");
     const slug = slugify(newCategoryName as string, { lower: true });
-    await createCategory({ name: newCategoryName as string, slug });
-    toast({
-      title: `Category "${newCategoryName}" successfully added!`,
-      variant: "default",
-    });
+    const res = await createCategory({ name: newCategoryName as string, slug });
+
+    if (res.error) {
+      toast({
+        title: `${res.error}`,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: `Category "${newCategoryName}" successfully added!`,
+        variant: "default",
+      });
+    }
   };
 
   return (

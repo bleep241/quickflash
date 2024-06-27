@@ -21,7 +21,7 @@ const Manage = async () => {
   const categories = await prisma.category.findMany();
 
   return (
-    <div className='flex flex-col md:flex-row gap-6 p-10'>
+    <div className='flex flex-col lg:flex-row gap-6 p-10'>
       <div>
         <Card>
           <CardHeader className='flex flex-row justify-between items-center'>
