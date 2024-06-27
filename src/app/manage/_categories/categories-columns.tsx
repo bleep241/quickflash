@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import {Category} from '@prisma/client'
+import { Category } from '@prisma/client'
 import { MoreHorizontal } from "lucide-react"
 import EditCategory from "./edit-category-dialog"
 import ConfirmDelete from "./confirm-category-delete"
@@ -39,19 +39,19 @@ export const categoriesColumns: ColumnDef<Category>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <EditCategory category={category}>
-            <DropdownMenuItem
-            className="cursor-pointer"
-            onSelect={(e) => e.preventDefault()}>
-              Edit
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onSelect={(e) => e.preventDefault()}>
+                Edit
               </DropdownMenuItem>
             </EditCategory>
             <ConfirmDelete category={category}>
-            <DropdownMenuItem
-            className="cursor-pointer text-destructive focus:text-destructive/80"
-            onSelect={(e) => e.preventDefault()}
-            >
-              Delete
-            </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer text-destructive focus:text-destructive/80"
+                onSelect={(e) => e.preventDefault()}
+              >
+                Delete
+              </DropdownMenuItem>
             </ConfirmDelete>
           </DropdownMenuContent>
         </DropdownMenu>

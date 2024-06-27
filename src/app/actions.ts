@@ -41,9 +41,14 @@ const chatModel = new ChatGoogleGenerativeAI({
 const outputParser = new StringOutputParser();
 
 // Batch and stream are also supported
+// const prompt = ChatPromptTemplate.fromMessages([
+//   ["system", "You are an expert flash card writer."],
+//   ["user", "Please generate 5 flash cards from the given text. The output should be a JSON string array of objects that is not wrapped in backticks or include the a prepending string of 'json'. Each object should contain a 'front' property with a question regarding a relevant topic within the given text and a 'back' that contains the content that should be studied to understand the topic outlined on the front: {input}"]
+// ]);
+
 const prompt = ChatPromptTemplate.fromMessages([
   ["system", "You are an expert flash card writer."],
-  ["user", "Please generate 5 flash cards from the given text. The output should be a JSON string array of objects that is not wrapped in backticks or include the a prepending string of 'json'. Each object should contain a 'front' property with a question regarding a relevant topic within the given text and a 'back' that contains the content that should be studied to understand the topic outlined on the front: {input}"]
+  ["user", `Please generate 5 flash cards from the given text. The output should be a JSON string array of objects that is not wrapped in backticks or include the a prepending string of 'json'. Each object should contain a 'front' property with a question regarding a relevant topic within the given text and a 'back' that contains the content that should be studied to understand the topic outlined on the front: ${BIG_STRING}`]
 ]);
 
 const chain = prompt.pipe(chatModel).pipe(outputParser);

@@ -1,8 +1,9 @@
+"use client"
+
 import React from 'react'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -12,10 +13,25 @@ import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
+import slugify from 'slugify'
+import { createCategory } from '../actions'
+import { useToast } from '@/components/ui/use-toast'
+import { DialogClose } from '@radix-ui/react-dialog'
 
-type Props = {}
+const CreateCategory = () => {
+  const { toast } = useToast();
 
-const CreateCategory = (props: Props) => {
+  const handleCreateCategory = async (formData: FormData) => {
+    console.log('formdata is:', formData.get("name"));
+    const newCategoryName = formData.get("name");
+    const slug = slugify(newCategoryName as string, { lower: true });
+    await createCategory({ name: newCategoryName as string, slug });
+    toast({
+      title: `Category "${newCategoryName}" successfully added!`,
+      variant: "default",
+    });
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,16 +43,18 @@ const CreateCategory = (props: Props) => {
         <DialogHeader>
           <DialogTitle>Create new category</DialogTitle>
         </DialogHeader>
-        <form id='create-category' className=''>
+        <form action={handleCreateCategory} id='create-category' className=''>
           <div className='grid gap-2'>
             <Label>Name</Label>
-            <Input id='name' name='name' placeholder='e.g. JavaScript' required/>
+            <Input id='name' name='name' placeholder='e.g. JavaScript' required />
           </div>
         </form>
         <DialogFooter>
-          <Button form='create-category' type='submit'>
-            Create
-          </Button>
+          <DialogClose>
+            <Button form='create-category' type='submit'>
+              Create
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

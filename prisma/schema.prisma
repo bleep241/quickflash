@@ -9,18 +9,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Flashcard {
   id         Int      @id @default(autoincrement())
   question   String
   answer     String
-  slug       String
-  categoryId Int
+  slug       String   @unique
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int
 
   @@index([categoryId])
 }
@@ -28,6 +28,6 @@ model Flashcard {
 model Category {
   id         Int         @id @default(autoincrement())
   name       String
-  slug       String
+  slug       String      @unique
   flashcards Flashcard[]
 }

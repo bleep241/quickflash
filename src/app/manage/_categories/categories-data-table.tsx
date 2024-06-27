@@ -19,12 +19,15 @@ import { categoriesColumns } from "./categories-columns"
 
 export function CategoriesDataTable({
   categories
-}: {categories: Category[]}) {
+}: {
+  categories: Category[]
+}) {
+
   const table = useReactTable({
     data: categories,
     columns: categoriesColumns,
     getCoreRowModel: getCoreRowModel(),
-  })
+  });
 
   return (
     <div className="rounded-md border">

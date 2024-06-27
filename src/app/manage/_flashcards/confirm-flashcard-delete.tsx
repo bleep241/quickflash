@@ -1,4 +1,3 @@
-import { Category } from '@prisma/client'
 import React from 'react'
 import {
   AlertDialog,
@@ -12,8 +11,21 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { FlashcardColumn } from './flashcards-columns'
+import { useToast } from '@/components/ui/use-toast'
+import { deleteFlashcard } from '../actions'
 
 const ConfirmDelete = ({ flashcard, children }: { flashcard: FlashcardColumn, children: React.ReactNode }) => {
+  const {toast} = useToast();
+
+  const handleDeleteFlashcard = async () => {
+    const response = await deleteFlashcard(flashcard.id);
+    toast({
+      title: `Flashcard ${flashcard.question} successfully deleted!`
+    });
+
+    console.log('response', response);
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -28,7 +40,9 @@ const ConfirmDelete = ({ flashcard, children }: { flashcard: FlashcardColumn, ch
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className='bg-destructive hover:bg-destructive/80'>Delete</AlertDialogAction>
+          <AlertDialogAction onClick={handleDeleteFlashcard} className='bg-destructive hover:bg-destructive/80'>
+          Delete
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

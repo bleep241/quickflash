@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { Menu, Zap } from "lucide-react";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,66 +31,67 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}>
-              <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-lg font-semibold md:text-base"
-          >
-            <Zap className="h-6 w-6 text-yellow-400" />
-            <span className="sr-only">Acme Inc</span>
-          </Link>
-          <Link
-            href="/manage"
-            className="text-foreground transition-colors hover:text-foreground"
-          >
-            Manage
-          </Link>
-          <Link
-            href="/practice"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Practice
-          </Link>
-        </nav>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="shrink-0 md:hidden"
+        <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 bg-blue-800">
+          <nav className="hidden w-full flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-lg font-semibold md:text-base"
             >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left">
-            <nav className="grid gap-6 text-lg font-medium">
-              <Link
-                href="/"
-                className="flex items-center gap-2 text-lg font-semibold"
+              <span className="font-bold text-3xl">QUICKFLA<Zap className="size-8 text-yellow-300 -mt-1 inline-block" />H</span>
+              <span className="sr-only">Quickflash</span>
+            </Link>
+            <Link
+              href="/manage"
+              className="text-white transition-colors hover:text-foreground"
+            >
+              Manage
+            </Link>
+            <Link
+              href="/practice"
+              className="text-white transition-colors hover:text-foreground"
+            >
+              Practice
+            </Link>
+          </nav>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden"
               >
-                <Zap className="h-6 w-6 text-yellow-400" />
-                <span className="sr-only">Quickflash</span>
-              </Link>
-              <Link href="/manage" className="hover:text-foreground">
-                Manage
-              </Link>
-              <Link
-                href="/practice"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Practice
-              </Link>
-            </nav>
-          </SheetContent>
-        </Sheet>
-        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        </div>
-      </header>
-      <main>
-        {children}
-      </main>
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <nav className="grid gap-6 text-lg font-medium">
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 text-lg font-semibold"
+                >
+                  <Zap className="h-6 w-6 text-yellow-400" />
+                  <span className="sr-only">Quickflash</span>
+                </Link>
+                <Link href="/manage" className="hover:text-foreground">
+                  Manage
+                </Link>
+                <Link
+                  href="/practice"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Practice
+                </Link>
+              </nav>
+            </SheetContent>
+          </Sheet>
+          <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+          </div>
+        </header>
+        <main>
+          {children}
+        </main>
+      <Toaster />
       </body>
     </html>
   );

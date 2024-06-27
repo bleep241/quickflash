@@ -11,8 +11,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { deleteCategory } from '../actions';
+import { useToast } from '@/components/ui/use-toast';
 
 const ConfirmDelete = ({ category, children }: { category: Category, children: React.ReactNode }) => {
+  const {toast} = useToast();
+
+  console.log('category in delete:', category);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -27,7 +32,15 @@ const ConfirmDelete = ({ category, children }: { category: Category, children: R
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className='bg-destructive hover:bg-destructive/80'>Delete</AlertDialogAction>
+          <AlertDialogAction onClick={() => {
+            deleteCategory(category.id);
+            toast({
+              title: `Category "${category.name}" has been deleted.`,
+              variant: "destructive",
+            });
+            }} className='bg-destructive hover:bg-destructive/80'>
+          Delete
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

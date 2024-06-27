@@ -1,5 +1,4 @@
 import React from 'react'
-import TestCard from './TestCard'
 import { Flashcard } from '@/app/page'
 
 const CardContainer = ({isLoading, flashcards}: {isLoading: boolean, flashcards: Flashcard[]}) => {
