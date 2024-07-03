@@ -8,6 +8,8 @@ import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { Menu, Zap } from "lucide-react";
 import { Toaster } from "@/components/ui/toaster";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import Providers from "@/components/Providers";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -18,6 +20,8 @@ export const metadata: Metadata = {
   title: "Quickflash⚡",
   description: "AI powered flashcard generator",
 };
+
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -89,9 +93,11 @@ export default function RootLayout({
           </div>
         </header>
         <main>
-          {children}
+          <Providers>
+            {children}
+          </Providers>
         </main>
-      <Toaster />
+        <Toaster />
       </body>
     </html>
   );
