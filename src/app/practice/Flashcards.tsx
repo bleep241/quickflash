@@ -27,7 +27,7 @@ function Flashcards({ category }: { category: Category }) {
     if (step === displayedFlashcards.length - 1) {
       setAnswerShown(false);
       setStep(0);
-      return
+      return;
     }
     setAnswerShown(false);
     setStep((s) => s + 1);
@@ -36,7 +36,7 @@ function Flashcards({ category }: { category: Category }) {
   useEffect(() => {
     setStep(0);
     setAnswerShown(false);
-  }, [category])
+  }, [category]);
 
   return (
     <Card className='w-full max-w-md'>

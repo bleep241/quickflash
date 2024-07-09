@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { Category } from '@prisma/client'
-import { Loader2, Play } from 'lucide-react'
-import { Suspense, useState } from 'react'
-import Flashcards from './Flashcards'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Category } from '@prisma/client';
+import { Loader2, Play } from 'lucide-react';
+import { Suspense, useState } from 'react';
+import Flashcards from './Flashcards';
 
 const Practice = ({ categories }: { categories: Category[] }) => {
   const [selectedCategory, setSelectedCategory] = useState<Category>(categories[0]);
@@ -51,6 +51,6 @@ const Practice = ({ categories }: { categories: Category[] }) => {
       )}
     </div>
   )
-}
+};
 
-export default Practice
+export default Practice;
