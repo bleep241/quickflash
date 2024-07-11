@@ -10,18 +10,18 @@ import { ArrowBigRight, RotateCcw } from 'lucide-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 function Flashcards({ category }: { category: Category }) {
+  const [step, setStep] = useState(0);
+  const [answerShown, setAnswerShown] = useState(false);
   const { data } = useSuspenseQuery({
     queryKey: [`${category.slug}-flashcards`],
     queryFn: async () => {
       const response = await fetch(`/api/categories/${category.id}/flashcards`);
       return response.json();
-    }
+    },
   });
 
   const flashcards = data.flashcards as Flashcard[];
-  const [step, setStep] = useState(0);
   const displayedFlashcards = useMemo(() => shuffleArray(flashcards), [flashcards]);
-  const [answerShown, setAnswerShown] = useState(false);
 
   const handleNextStep = () => {
     if (step === displayedFlashcards.length - 1) {
@@ -38,24 +38,25 @@ function Flashcards({ category }: { category: Category }) {
     setAnswerShown(false);
   }, [category]);
 
+
   return (
     <Card className='w-full max-w-md'>
       <CardHeader>
         <CardTitle>
-          {displayedFlashcards[step].question}
+          {displayedFlashcards[step] && displayedFlashcards[step].question}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <Accordion
-          value={answerShown ? displayedFlashcards[step].slug : undefined}
+          value={answerShown ? (displayedFlashcards[step] && displayedFlashcards[step].slug) : undefined}
           onValueChange={(value) => setAnswerShown(!!value)}
           type='single' collapsible>
-          <AccordionItem value={displayedFlashcards[step].slug}>
+          <AccordionItem value={(displayedFlashcards[step] && displayedFlashcards[step].slug)}>
             <AccordionTrigger>
               Reveal answer
             </AccordionTrigger>
             <AccordionContent>
-              {answerShown && displayedFlashcards[step].answer}
+              {answerShown && (displayedFlashcards[step] && displayedFlashcards[step].answer)}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
