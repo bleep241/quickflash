@@ -46,7 +46,11 @@ function Flashcards({ category }: { category: Category }) {
           {displayedFlashcards[step] && displayedFlashcards[step].question}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      {displayedFlashcards.length === 0 ? (
+        <CardContent>
+          The selected category has no flashcards.
+        </CardContent>
+      ) : (<CardContent>
         <Accordion
           value={answerShown ? (displayedFlashcards[step] && displayedFlashcards[step].slug) : undefined}
           onValueChange={(value) => setAnswerShown(!!value)}
@@ -60,20 +64,20 @@ function Flashcards({ category }: { category: Category }) {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </CardContent>
-      <CardFooter className='justify-between'>
+      </CardContent>)}
+      {displayedFlashcards.length !== 0 && (<CardFooter className='justify-between'>
         <div>
           {step + 1} / {displayedFlashcards.length}
         </div>
         <Button onClick={handleNextStep} disabled={!answerShown} variant="outline" size="icon">
           {step === displayedFlashcards.length - 1 ?
-           (
-            <RotateCcw />
-           ) : (
-            <ArrowBigRight />
-          )}
+            (
+              <RotateCcw />
+            ) : (
+              <ArrowBigRight />
+            )}
         </Button>
-      </CardFooter>
+      </CardFooter>)}
     </Card>
   )
 }
